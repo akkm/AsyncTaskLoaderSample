@@ -19,6 +19,7 @@ import info.akkuma.asynctaskloadersample.api.FeedEntity;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedEntity>> {
     private static final String TAG = "MainActivity";
+    private static final String TAG2 = "LoaderCallbacks";
     private static final String ARG_LIMIT = "limit";
     private static final String ARG_UNTIL = "until";
     private static final String ARG_IS_REFRESH = "isRefresh";
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate called.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -64,6 +66,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart called.");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume called.");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause called.");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop called.");
+        super.onStop();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add("Cancel").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
@@ -77,13 +103,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy called.");
         getSupportLoaderManager().destroyLoader(R.id.loader_id_timeline);
         super.onDestroy();
     }
 
     @Override
     public Loader<List<FeedEntity>> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader called.");
+        Log.d(TAG2, "onCreateLoader called.");
         int limit = args.getInt(ARG_LIMIT, 10);
         int until = args.getInt(ARG_UNTIL, 0);
         boolean isRefresh = args.getBoolean(ARG_IS_REFRESH, true);
@@ -92,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<FeedEntity>> loader, List<FeedEntity> data) {
-        Log.d(TAG, "onLoadFinished called.");
+        Log.d(TAG2, "onLoadFinished called.");
         if (data == null) {
             return;
         }
@@ -109,6 +136,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<List<FeedEntity>> loader) {
-        Log.d(TAG, "onLoaderReset called.");
+        Log.d(TAG2, "onLoaderReset called.");
     }
 }
